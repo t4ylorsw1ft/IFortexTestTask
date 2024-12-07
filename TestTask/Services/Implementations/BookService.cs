@@ -23,7 +23,6 @@ namespace TestTask.Services.Implementations
                 .MaxAsync(b => b.Price * b.QuantityPublished);
 
             var book = await _dbContext.Books
-                .Include(b => b.Author)
                 .Where(b => b.Price * b.QuantityPublished == highestTotalPublishedValue)
                 .FirstOrDefaultAsync();
 
@@ -38,7 +37,6 @@ namespace TestTask.Services.Implementations
             var referenceDate = new DateTime(2012, 5, 25);
 
             var books = await _dbContext.Books
-                .Include(b => b.Author)
                 .Where(b => b.Title.Contains("Red") && b.PublishDate > referenceDate)
                 .ToListAsync();
 

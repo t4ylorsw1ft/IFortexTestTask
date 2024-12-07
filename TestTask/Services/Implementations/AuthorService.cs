@@ -20,7 +20,6 @@ namespace TestTask.Services.Implementations
         public async Task<Author> GetAuthor()
         {
             var author = await _dbContext.Authors
-                .Include(a => a.Books)
                 .Where(a => a.Books.Any())
                 .OrderByDescending(a => a.Books.Max(b => b.Title.Length))
                 .ThenBy(a => a.Id)
@@ -34,7 +33,6 @@ namespace TestTask.Services.Implementations
         public async Task<List<Author>> GetAuthors()
         {
             var authors = await _dbContext.Authors
-                .Include(a => a.Books)
                 .Where(a => a.Books.Count(b => b.PublishDate.Year > 2015) % 2 == 0 && a.Books.Count(b => b.PublishDate.Year > 2015) != 0) 
                 .ToListAsync();
             return authors;
